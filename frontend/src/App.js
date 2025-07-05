@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AuthContainer from './components/Auth/AuthContainer';
+import Dashboard from './components/Dashboard';
 import AuthService from './services/authService';
 import './App.css';
 
@@ -47,20 +48,17 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Welcome to Durga Salon</h1>
-        <div className="user-info">
-          <p>Hello, {user.name}!</p>
-          <p>Email: {user.email}</p>
-          <button onClick={handleLogout} className="logout-button">
-            Logout
-          </button>
+        <div className="header-content">
+          <h1>Welcome to Durga Salon</h1>
+          <div className="user-info">
+            <p>Hello, {user.name}!</p>
+            <button onClick={handleLogout} className="logout-button">
+              Logout
+            </button>
+          </div>
         </div>
       </header>
-      <main className="App-main">
-        <h2>Dashboard</h2>
-        <p>You are successfully logged in. This is your salon dashboard area.</p>
-        {/* Add your salon content here */}
-      </main>
+      <Dashboard />
     </div>
   );
 }
