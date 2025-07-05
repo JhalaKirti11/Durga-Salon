@@ -1,6 +1,7 @@
 import React from 'react';
 
 const AppointmentConfirmationModal = ({ appointment, onClose, onPrint }) => {
+  console.log('AppointmentConfirmationModal rendered with:', appointment);
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       weekday: 'long',

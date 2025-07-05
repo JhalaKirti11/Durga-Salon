@@ -1,6 +1,7 @@
 const Appointment = require('../models/Appointment');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const reminderService = require('../services/reminderService');
 
 // Book a new appointment
 const bookAppointment = async (req, res) => {
@@ -140,6 +141,17 @@ const bookAppointment = async (req, res) => {
     console.log('Appointment object created, attempting to save...');
     await appointment.save();
     console.log('Appointment saved successfully');
+
+    // Create reminders for the appointment
+    if (userId) {
+      try {
+        const reminders = await reminderService.createAppointmentReminders(appointment._id, userId);
+        console.log(`Created ${reminders.length} reminders for appointment ${appointment._id}`);
+      } catch (reminderError) {
+        console.error('Error creating reminders:', reminderError);
+        // Don't fail the appointment booking if reminder creation fails
+      }
+    }
 
     // Prepare response data
     const responseData = {
