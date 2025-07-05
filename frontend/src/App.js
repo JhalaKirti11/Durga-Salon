@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import AuthContainer from './components/Auth/AuthContainer';
 import Dashboard from './components/Dashboard';
+import Header from './components/Header/Header';
+import Sidebar from './components/Sidebar/Sidebar';
+import ProfilePage from './components/Profile/ProfilePage';
 import AuthService from './services/authService';
 
 function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
   useEffect(() => {
     // Check if user is already logged in
@@ -29,6 +34,25 @@ function App() {
   const handleLogout = () => {
     AuthService.logout();
     setUser(null);
+    setSidebarOpen(false);
+    setProfileOpen(false);
+  };
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
+
+  const openProfile = () => {
+    setProfileOpen(true);
+    setSidebarOpen(false); // Close sidebar when opening profile
+  };
+
+  const closeProfile = () => {
+    setProfileOpen(false);
   };
 
   if (loading) {
@@ -46,18 +70,32 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <div className="header-content">
-          <h1>Welcome to Durga Salon</h1>
-          <div className="user-info">
-            <p>Hello, {user.name}!</p>
-            <button onClick={handleLogout} className="logout-button">
-              Logout
-            </button>
-          </div>
-        </div>
-      </header>
-      <Dashboard />
+      {/* Header */}
+      <Header 
+        onToggleSidebar={toggleSidebar}
+        user={user}
+        onOpenProfile={openProfile}
+      />
+
+      {/* Sidebar */}
+      <Sidebar 
+        isOpen={sidebarOpen}
+        onClose={closeSidebar}
+        user={user}
+        onOpenProfile={openProfile}
+      />
+
+      {/* Profile Page */}
+      <ProfilePage
+        user={user}
+        isOpen={profileOpen}
+        onClose={closeProfile}
+      />
+
+      {/* Main Content */}
+      <main className="main-content">
+        <Dashboard />
+      </main>
     </div>
   );
 }

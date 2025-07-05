@@ -170,11 +170,11 @@ const AppointmentForm = ({ onClose, onSuccess }) => {
 
   return (
     <>
-      <SuccessNotification
+      {/* <SuccessNotification
         message={successMessage}
         show={showSuccess}
         onClose={() => setShowSuccess(false)}
-      />
+      /> */}
       <div className="appointment-overlay">
         <div className="appointment-modal">
         <div className="appointment-header">
@@ -185,7 +185,7 @@ const AppointmentForm = ({ onClose, onSuccess }) => {
         </div>
         
         {/* Test button for development */}
-        {process.env.NODE_ENV === 'development' && (
+        {/* {process.env.NODE_ENV === 'development' && (
           <div style={{ padding: '10px', textAlign: 'center', background: '#f0f0f0', margin: '10px 0' }}>
             <button 
               onClick={() => {
@@ -210,7 +210,7 @@ const AppointmentForm = ({ onClose, onSuccess }) => {
               Test Confirmation Modal
             </button>
           </div>
-        )}
+        )} */}
 
         {error && <div className="error-message">{error}</div>}
 

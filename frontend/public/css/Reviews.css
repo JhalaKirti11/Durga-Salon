@@ -1,0 +1,240 @@
+/* Reviews Page Styles */
+.reviews-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 40px 0;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.pagination button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 2px solid #e0e0e0;
+  background: white;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: #666;
+}
+
+.pagination button:hover:not(:disabled) {
+  border-color: #667eea;
+  color: #667eea;
+  transform: translateY(-1px);
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pagination button i {
+  font-size: 12px;
+}
+
+.page-info {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  padding: 10px 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+/* Write Review Section */
+.write-review-section {
+  text-align: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  margin: 30px 0;
+  border: 1px solid #e0e0e0;
+}
+
+.write-review-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.write-review-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.write-review-btn i {
+  font-size: 18px;
+  color: #ffd700;
+}
+
+.review-hint {
+  margin-top: 15px;
+  color: #666;
+  font-size: 14px;
+  font-style: italic;
+}
+
+/* Reviews Container */
+.reviews-container {
+  margin: 30px 0;
+}
+
+.reviews-container.loading,
+.reviews-container.error {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  color: #666;
+}
+
+.loading-spinner i {
+  font-size: 32px;
+  color: #667eea;
+}
+
+.reviews-container.error i {
+  font-size: 48px;
+  color: #dc3545;
+  margin-bottom: 20px;
+}
+
+.reviews-container.error h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.reviews-container.error p {
+  margin: 0 0 20px 0;
+  color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .reviews-page {
+    padding: 15px;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .pagination button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .write-review-section {
+    padding: 30px 15px;
+  }
+
+  .write-review-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .reviews-page {
+    padding: 10px;
+  }
+
+  .pagination {
+    padding: 10px;
+  }
+
+  .page-info {
+    padding: 8px 15px;
+    font-size: 12px;
+  }
+
+  .write-review-section {
+    padding: 20px 10px;
+  }
+
+  .write-review-btn {
+    padding: 10px 15px;
+    font-size: 13px;
+  }
+
+  .review-hint {
+    font-size: 12px;
+  }
+}
+
+/* Loading and Error States */
+.reviews-container.loading .loading-spinner,
+.reviews-container.error {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Focus States */
+.pagination button:focus,
+.write-review-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Hover Effects */
+.write-review-section:hover {
+  background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+}
+
+/* Print Styles */
+@media print {
+  .write-review-section,
+  .pagination {
+    display: none;
+  }
+
+  .reviews-page {
+    padding: 0;
+  }
+} 

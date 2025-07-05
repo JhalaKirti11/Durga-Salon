@@ -1,4 +1,6 @@
 const User = require('../models/User');
+const Appointment = require('../models/Appointment');
+const Review = require('../models/Review');
 const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'yoursecretkey';
@@ -70,5 +72,105 @@ exports.getUserById = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+// Get user profile with statistics
+exports.getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    
+    // Get additional user statistics
+    const [appointmentCount, reviewCount, pendingAppointments] = await Promise.all([
+      Appointment.countDocuments({ userId: req.user.id }),
+      Review.countDocuments({ userId: req.user.id }),
+      Appointment.countDocuments({ userId: req.user.id, status: 'confirmed' })
+    ]);
+
+    const userProfile = {
+      ...user.toObject(),
+      appointmentCount,
+      reviewCount,
+      pendingAppointments
+    };
+
+    res.json({
+      success: true,
+      user: userProfile
+    });
+  } catch (error) {
+    console.error('Error getting profile:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to get profile',
+      error: error.message
+    });
+  }
+};
+
+// Update user profile
+exports.updateProfile = async (req, res) => {
+  try {
+    const { name, email, phone, address } = req.body;
+    
+    // Validate required fields
+    if (!name || !email) {
+      return res.status(400).json({
+        success: false,
+        message: 'Name and email are required'
+      });
+    }
+
+    // Check if email is already taken by another user
+    const existingUser = await User.findOne({ 
+      email, 
+      _id: { $ne: req.user.id } 
+    });
+    
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email is already taken by another user'
+      });
+    }
+
+    // Update user profile
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        name,
+        email,
+        phone,
+        address
+      },
+      { new: true, runValidators: true }
+    ).select('-password');
+
+    // Get updated statistics
+    const [appointmentCount, reviewCount, pendingAppointments] = await Promise.all([
+      Appointment.countDocuments({ userId: req.user.id }),
+      Review.countDocuments({ userId: req.user.id }),
+      Appointment.countDocuments({ userId: req.user.id, status: 'confirmed' })
+    ]);
+
+    const userProfile = {
+      ...updatedUser.toObject(),
+      appointmentCount,
+      reviewCount,
+      pendingAppointments
+    };
+
+    res.json({
+      success: true,
+      message: 'Profile updated successfully',
+      user: userProfile
+    });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update profile',
+      error: error.message
+    });
   }
 }; 
