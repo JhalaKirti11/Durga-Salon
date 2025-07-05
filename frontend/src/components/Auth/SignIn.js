@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './Auth.css';
 
 const SignIn = ({ onSwitchToSignUp, onSignInSuccess }) => {
   const [formData, setFormData] = useState({

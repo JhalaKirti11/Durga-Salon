@@ -1,7 +1,8 @@
-import React from 'react';
-import './Dashboard.css';
+import React, { useState } from 'react';
+import AppointmentForm from '../Appointment';
 
 const Dashboard = () => {
+  const [showAppointmentForm, setShowAppointmentForm] = useState(false);
   const salonImages = [
     {
       id: 1,
@@ -78,8 +79,28 @@ const Dashboard = () => {
     ]
   };
 
+  const handleBookAppointment = () => {
+    setShowAppointmentForm(true);
+  };
+
+  const handleCloseAppointmentForm = () => {
+    setShowAppointmentForm(false);
+  };
+
+  const handleAppointmentSuccess = (appointmentData) => {
+    // You can add success notification here
+    console.log('Appointment booked successfully:', appointmentData);
+    setShowAppointmentForm(false);
+  };
+
   return (
     <div className="dashboard-container">
+      {showAppointmentForm && (
+        <AppointmentForm
+          onClose={handleCloseAppointmentForm}
+          onSuccess={handleAppointmentSuccess}
+        />
+      )}
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
@@ -87,7 +108,7 @@ const Dashboard = () => {
           <p className="salon-tagline">{salonDetails.tagline}</p>
           <p className="salon-description">{salonDetails.description}</p>
           <div className="hero-buttons">
-            <button className="btn-primary">Book Appointment</button>
+            <button className="btn-primary" onClick={handleBookAppointment}>Book Appointment</button>
             <button className="btn-secondary">View Services</button>
           </div>
         </div>
@@ -175,7 +196,7 @@ const Dashboard = () => {
         <div className="cta-content">
           <h2>Ready to Transform Your Look?</h2>
           <p>Book your appointment today and experience the difference!</p>
-          <button className="btn-primary">Book Now</button>
+          <button className="btn-primary" onClick={handleBookAppointment}>Book Now</button>
         </div>
       </section>
     </div>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
-import './Auth.css';
 
 const AuthContainer = ({ onAuthSuccess }) => {
   const [isSignUp, setIsSignUp] = useState(false);

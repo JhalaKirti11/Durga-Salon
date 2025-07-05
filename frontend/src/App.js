@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import AuthContainer from './components/Auth/AuthContainer';
 import Dashboard from './components/Dashboard';
 import AuthService from './services/authService';
-import './App.css';
 
 function App() {
   const [user, setUser] = useState(null);
