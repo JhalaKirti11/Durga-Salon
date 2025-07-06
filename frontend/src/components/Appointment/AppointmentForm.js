@@ -184,34 +184,7 @@ const AppointmentForm = ({ onClose, onSuccess }) => {
           </button>
         </div>
         
-        {/* Test button for development */}
-        {/* {process.env.NODE_ENV === 'development' && (
-          <div style={{ padding: '10px', textAlign: 'center', background: '#f0f0f0', margin: '10px 0' }}>
-            <button 
-              onClick={() => {
-                const testData = {
-                  ...formData,
-                  appointmentId: `TEST-${Date.now()}`,
-                  status: 'confirmed'
-                };
-                setAppointmentData(testData);
-                setShowConfirmation(true);
-                console.log('Test modal triggered');
-              }}
-              style={{ 
-                background: '#007bff', 
-                color: 'white', 
-                border: 'none', 
-                padding: '8px 16px', 
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
-            >
-              Test Confirmation Modal
-            </button>
-          </div>
-        )} */}
-
+      
         {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit} className="appointment-form">
